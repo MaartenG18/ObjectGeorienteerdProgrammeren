@@ -2,82 +2,63 @@
 # include <string.h>
 # include <iostream>
 
-Date::Date()
-{
-	m_day = 01;
-	m_month = 01;
-	m_year = 2000;
-	m_isValid = checkDate(*this);
-}
 
-Date::Date(std::string date) 
+// ----- Constructors -----
+
+Date::Date() // default constructor with default date
 {
-	m_day = stoi(date.substr(0, 2));
-	m_month = stoi(date.substr(3, 2));
-	m_year = stoi(date.substr(6, 4));
+	setDay(1);
+	setMonth(1);
+	setYear(2000);
+	checkIsLeapYear(year());
 	checkDate(*this);
 }
 
-Date::Date(int day, int month, int year) : m_day{day}, m_month(month), m_year(year)
+Date::Date(std::string date) // constructor if the date is entered as string
 {
+	setDay(stoi(date.substr(0, 2)));
+	setMonth(stoi(date.substr(3, 2)));
+	setYear(stoi(date.substr(6, 4)));
+	checkIsLeapYear(year());
 	checkDate(*this);
 }
 
-void Date::setDay(int day) 
+Date::Date(int day, int month, int year) : m_day{ day }, m_month{ month }, m_year{year} // constructor to make a date with int's
 {
-	m_day = day;
+	checkIsLeapYear(year);
+	checkDate(*this);
 }
 
-void Date::setMonth(int month)
-{
-	m_month = month;
-}
 
-void Date::setYear(int year)
-{
-	m_year = year;
-}
+// ----- Methods -----
 
-int Date::day() const
+void Date::checkDate(Date date) // method to check if a date is a valid date
 {
-	return m_day;
-}
-
-int Date::month() const
-{
-	return m_month;
-}
-
-int Date::year() const
-{
-	return m_year;
-}
-
-bool Date::checkDate(Date date)
-{
-	if (checkDay(date.day()) == false || checkMonth(date.month()) == false || checkYear(date.year()) == false) 
+	if (checkDay(date.day()) == false || checkMonth(date.month()) == false || checkYear(date.year()) == false)
 	{
 		exit(-1);
 	}
-	return true;
-}
-
-bool Date::checkDay(int day)
-{
-	if (day < 1 || day > 31) {
-		std::cerr << "The day of the date is invalid\n";
-		return false;
-	}
-	else 
+	else if (date.month() == 2 && date.isLeapYear() && date.day() > 29)
 	{
-		return true;
+		std::cerr << "In a leap year february's day can't be greater than 29\n";
+		exit(-1);
+	}
+	else if (date.month() == 2 && date.day() > 28)
+	{
+		std::cerr << "February's day can't be greater than 28\n";
+		exit(-1);
+	}
+	else if ((date.month() == 4 || date.month() == 6 || date.month() == 9 || date.month() == 11) && date.day() > 30) {
+		std::cerr << "The day can't be greater than 30 in this month\n";
+		exit(-1);
 	}
 }
 
-bool Date::checkMonth(int month)
+bool Date::checkDay(int day) // method to check if day is valid
 {
-	if (month < 1 || month > 12) {
-		std::cerr << "The month of the date is invalid\n";
+	if (day < 1 || day > 31)
+	{
+		std::cerr << "The day is not a valid input\n";
 		return false;
 	}
 	else
@@ -86,14 +67,85 @@ bool Date::checkMonth(int month)
 	}
 }
 
-bool Date::checkYear(int year)
+bool Date::checkMonth(int month) // method to check if a month is valid
 {
-	if (year < 1) {
-		std::cerr << "The year of the date is invalid\n";
-		exit(-1);
+	if (month < 1 || month > 12)
+	{
+		std::cerr << "The month is not a valid input\n";
+		return false;
 	}
-	else 
+	else
 	{
 		return true;
 	}
+}
+
+bool Date::checkYear(int year) // method to check is a year is valid
+{
+	if (year < 1) {
+		std::cerr << "The year is not a valid input\n";
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+void Date::checkIsLeapYear(int year) // method to check for a leap year
+{
+	if (((year % 4 == 0) && (year % 100 != 0)) || year % 400 == 0)
+	{
+		setIsLeapYear(true);
+	}
+	else
+	{
+		setIsLeapYear(false);
+	}
+}
+
+
+// ----- setters -----
+
+void Date::setDay(int day) // setter to change the day of date object
+{
+	m_day = day;
+}
+
+void Date::setMonth(int month) // setter to change the month of a date object
+{
+	m_month = month;
+}
+
+void Date::setYear(int year) // setter to change the year of a date object
+{
+	m_year = year;
+}
+
+void Date::setIsLeapYear(bool result)
+{
+	m_isLeapYear = result;
+}
+
+
+// ----- getters -----
+
+int Date::day() const // getter for day
+{
+	return m_day;
+}
+
+int Date::month() const // getter for month
+{
+	return m_month;
+}
+
+int Date::year() const // getter for year
+{
+	return m_year;
+}
+
+bool Date::isLeapYear() const
+{
+	return m_isLeapYear;
 }

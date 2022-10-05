@@ -5,7 +5,7 @@
 
 int main()
 {
-    double array[3]{};
+    double array[3]{}; // initializing an empty array constisting of 3 doubles
 
     std::cout << "Enter 3 numbers to convert\n";
 
