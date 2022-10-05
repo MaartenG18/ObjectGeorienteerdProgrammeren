@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 class Date
 {
@@ -10,6 +11,7 @@ public:
 	int month() const; // getter
 	int year() const; // getter
 	bool isLeapYear() const; //getter
+
 private:
 	int m_day{};
 	int m_month{};
