@@ -1,4 +1,0 @@
-﻿  Stack_main.cpp
-D:\School\2022 - 2023\OOP\ObjectGeoriënteerdProgrammeren\Week 1\Opdracht 1.2.8\Opdracht 1.2.8\Stack.h(16,14): warning C4200: nonstandard extension used: zero-sized array in struct/union
-D:\School\2022 - 2023\OOP\ObjectGeoriënteerdProgrammeren\Week 1\Opdracht 1.2.8\Opdracht 1.2.8\Stack.h(16,14): message : This member will be ignored by a defaulted constructor or copy/move assignment operator
-  Opdracht 1.2.8.vcxproj -> D:\School\2022 - 2023\OOP\ObjectGeoriënteerdProgrammeren\Week 1\Opdracht 1.2.8\x64\Debug\Opdracht 1.2.8.exe
